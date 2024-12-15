@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css">
+    <title>CV Text Improver</title>
+</head>
+<body>
+    <div class="container">
+        <h1>CV Text Improver</h1>
+        <textarea id="input-text" placeholder="Paste your CV text here..."></textarea>
+        <button id="improve-btn">Improve Text</button>
+        <div id="output-container">
+            <h2>Improved Text</h2>
+            <p id="output-text"></p>
+        </div>
+    </div>
+    <script>
+        document.getElementById('improve-btn').addEventListener('click', async () => {
+            const inputText = document.getElementById('input-text').value;
+            const response = await fetch('/improve', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text: inputText })
+            });
+            const data = await response.json();
+            document.getElementById('output-text').textContent = data.improved_text || data.error;
+        });
+    </script>
+</body>
+</html>

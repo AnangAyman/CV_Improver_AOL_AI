@@ -1,0 +1,68 @@
+# Byte-compiled files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environment
+venv/
+.env/
+*.env
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Cache files and folders
+*.cache
+*.log
+*.tmp
+.cache/
+*.pickle
+*.pkl
+
+# Hugging Face Transformers cache
+transformers_cache/
+**/transformers/
+*.safetensors
+
+# Model files
+*.bin
+*.ckpt
+pytorch_model.bin
+model.safetensors
+
+# Flask-specific
+instance/
+*.db
+*.sqlite3
+*.bak
+
+# IDE-specific
+.vscode/
+.idea/
+*.sublime-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Testing-related
+coverage.xml
+*.coverage
+htmlcov/
+
+# Ignore compiled HTML/CSS/JS (if applicable)
+*.min.js
+*.min.css
+*.css.map
+*.js.map
+*.map
+
+# Logs and debugging
+*.log
+*.out
+*.err
+
+# Other sensitive or temporary files
+!README.md
+*.bak
