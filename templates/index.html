@@ -16,9 +16,25 @@
         <h1>Input Text</h1>
         <textarea id="input-text" placeholder="Paste your CV text here..."></textarea>
         <button id="improve-btn">Improve Text</button>
+
+        <!-- hidden part -->
         <div id="output-container">
-            <h2>Improved Text</h2>
-            <p id="output-text"></p>
+            <div id="score">
+                <div id="score-container">
+                    <h2>Old Score</h2>
+                    <p id="old-score">60</p>
+                </div>
+                <div id="score-container">
+                    <h2>New Score</h2>
+                    <p id="new-score">80</p>
+                </div>
+            </div>
+            
+            <div>
+                <h2>Improved Text</h2>
+                <p id="output-text"></p>
+            </div>
+            
         </div>
     </div>
     <script>
@@ -31,6 +47,20 @@
             });
             const data = await response.json();
             document.getElementById('output-text').textContent = data.improved_text || data.error;
+
+            const improvedText = document.getElementById('output-text').textContent;
+            const outputContainer = document.getElementById('output-container');
+            const outputText = document.getElementById('output-text');
+
+            if (improvedText.trim()) {
+                outputText.textContent = improvedText;
+                outputContainer.style.maxHeight = '500px'; // Set a height sufficient to fit content
+                outputContainer.style.opacity = '1'; // Fade in
+            } else {
+                outputContainer.style.maxHeight = '0'; // Hide the container
+                outputContainer.style.opacity = '0'; // Fade out
+            }
+
         });
     </script>
 </body>
