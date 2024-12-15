@@ -1,9 +1,9 @@
 import torch
-from transformers import T5Tokenizer, T5ForConditionalGeneration
+from transformers import BloomTokenizerFast, BloomForCausalLM
 
-model_name = 'google/flan-t5-base'  # You can use 'gpt2-medium' for a larger model
-tokenizer = T5Tokenizer.from_pretrained(model_name)
-model = T5ForConditionalGeneration.from_pretrained(model_name)
+model_name = 'bigscience/bloom-1b7'  # You can use 'gpt2-medium' for a larger model
+tokenizer = BloomTokenizerFast.from_pretrained(model_name)
+model = BloomForCausalLM.from_pretrained(model_name)
 
 
 def improve_cv_text(input_text, max_length=1000):
