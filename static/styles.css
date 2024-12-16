@@ -1,170 +1,218 @@
 /* General Reset */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  /* Body Styling */
-  body {
-    font-family: 'Inter', Arial, sans-serif; /* Modern and clean font */
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    min-height: 100vh;
-    background: linear-gradient(135deg, #6c6ca0, #9fa5d5); /* Subtle gradient for a modern look */
-    color: #333;
-  }
-  
-  header {
-    background-color: #9898e0;
-    padding: 40px;
-    color: #333;
-    width: 100%;
-    text-align: center;
-    font-size: 25px;
-  }
-  
-  /* Container Styling */
-  .container {
-    text-align: center;
-    background: #ffffff;
-    margin: 100px 0;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-    width: 90%;
-    max-width: 650px;
-  }
-  
-  /* Textarea Styling */
-  textarea {
-    width: 100%;
-    height: 200px;
-    margin-bottom: 15px;
-    margin-top: 15px;
-    padding: 12px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    background: #f8f9fa;
-    resize: vertical;
-    font-size: 16px;
-    outline: none;
-    transition: border-color 0.3s;
-    text-align: justify;
-    font-family:"Times New Roman";
-  }
-  textarea:focus {
-    border-color: #007BFF;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
-  }
-  
-  /* Button Styling */
-  button {
-    position: relative;
-    padding: 10px 20px;
-    border-radius: 7px;
-    border: 1px solid rgb(42, 73, 175);
-    font-size: 14px;
-    text-transform: uppercase;
-    font-weight: 600;
-    letter-spacing: 2px;
-    background-color: rgb(152, 152, 224);
-    color: #080808;
-    overflow: hidden;
-    box-shadow: 0 0 0 0 transparent;
-    -webkit-transition: all 0.2s ease-in;
-    -moz-transition: all 0.2s ease-in;
-    transition: all 0.2s ease-in;
-  }
-  
-  button:hover {
-    background: rgb(152, 152, 224);
-    box-shadow: 0 0 30px 5px rgb(152, 152, 224, 0.815);
-    -webkit-transition: all 0.2s ease-out;
-    -moz-transition: all 0.2s ease-out;
-    transition: all 0.2s ease-out;
-  }
-  
-  button:hover::before {
-    -webkit-animation: sh02 0.5s 0s linear;
-    -moz-animation: sh02 0.5s 0s linear;
-    animation: sh02 0.5s 0s linear;
-  }
-  
-  button::before {
-    content: '';
-    display: block;
-    width: 0px;
-    height: 86%;
-    position: absolute;
-    top: 7%;
-    left: 0%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+  font-family: 'Inter', Arial, sans-serif; /* Modern and clean font */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #6c6ca0, #9fa5d5); /* Subtle gradient for a modern look */
+  color: #333;
+}
+
+header {
+  background-color: #9898e0;
+  padding: 40px;
+  color: #333;
+  width: 100%;
+  text-align: center;
+  font-size: 25px;
+}
+
+/* Container Styling */
+.container {
+  text-align: center;
+  background: #ffffff;
+  margin: 100px 0;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  width: 90%;
+  max-width: 650px;
+}
+
+/* Textarea Styling */
+textarea {
+  width: 100%;
+  height: 200px;
+  margin-bottom: 15px;
+  margin-top: 15px;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: #f8f9fa;
+  resize: vertical;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s;
+  text-align: justify;
+  font-family:"Times New Roman";
+}
+textarea:focus {
+  border-color: #007BFF;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+/* Button Styling */
+button {
+  position: relative;
+  padding: 10px 20px;
+  border-radius: 7px;
+  border: 1px solid rgb(42, 73, 175);
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 2px;
+  background-color: rgb(152, 152, 224);
+  color: #525252;
+  overflow: hidden;
+  box-shadow: 0 0 0 0 transparent;
+  -webkit-transition: all 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
+}
+
+button:hover {
+  background: rgb(152, 152, 224);
+  box-shadow: 0 0 30px 5px rgb(152, 152, 224, 0.815);
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+}
+
+button:hover::before {
+  -webkit-animation: sh02 0.5s 0s linear;
+  -moz-animation: sh02 0.5s 0s linear;
+  animation: sh02 0.5s 0s linear;
+}
+
+button::before {
+  content: '';
+  display: block;
+  width: 0px;
+  height: 86%;
+  position: absolute;
+  top: 7%;
+  left: 0%;
+  opacity: 0;
+  background: #fff;
+  box-shadow: 0 0 50px 30px #fff;
+  -webkit-transform: skewX(-20deg);
+  -moz-transform: skewX(-20deg);
+  -ms-transform: skewX(-20deg);
+  -o-transform: skewX(-20deg);
+  transform: skewX(-20deg);
+}
+
+@keyframes sh02 {
+  from {
     opacity: 0;
-    background: #fff;
-    box-shadow: 0 0 50px 30px #fff;
-    -webkit-transform: skewX(-20deg);
-    -moz-transform: skewX(-20deg);
-    -ms-transform: skewX(-20deg);
-    -o-transform: skewX(-20deg);
-    transform: skewX(-20deg);
+    left: 0%;
   }
-  
-  @keyframes sh02 {
-    from {
-      opacity: 0;
-      left: 0%;
-    }
-  
-    50% {
-      opacity: 1;
-    }
-  
-    to {
-      opacity: 0;
-      left: 100%;
-    }
+
+  50% {
+    opacity: 1;
   }
-  
-  button:active {
-    box-shadow: 0 0 0 0 transparent;
-    -webkit-transition: box-shadow 0.2s ease-in;
-    -moz-transition: box-shadow 0.2s ease-in;
-    transition: box-shadow 0.2s ease-in;
+
+  to {
+    opacity: 0;
+    left: 100%;
   }
-  
-  
-  /* Output Container */
-  #output-container {
-    margin-top: 20px;
+}
+
+button:active {
+  box-shadow: 0 0 0 0 transparent;
+  -webkit-transition: box-shadow 0.2s ease-in;
+  -moz-transition: box-shadow 0.2s ease-in;
+  transition: box-shadow 0.2s ease-in;
+}
+
+
+/* Output Container */
+#output-container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease, opacity 0.5s ease;
+}
+
+#score {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Center the items vertically */
+  flex-direction: row;
+  width: 90%;
+  height: auto;
+  padding: 20px;
+  background-color: #f4f4f9; /* Light background for the score section */
+  border-radius: 10px; /* Rounded corners for the whole score section */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+  margin: 20px; /* Add space at the top */
+}
+
+#score-container {
+  background-color: #6c6ca0; /* Darker background for each score container */
+  margin: 0 20px; /* Reduced margin for better alignment */
+  padding: 20px;
+  border-radius: 8px; /* Rounded corners for each container */
+  width: 200px; /* Fixed width for score containers */
+  text-align: center; /* Center the text inside each container */
+  color: white; /* White text for contrast */
+}
+
+#old-score,
+#new-score {
+  font-size: 40px;
+  font-weight: bold; /* Make the score stand out more */
+  padding: 10px;
+  margin: 0; /* Remove default margin for consistent spacing */
+}
+
+#old-score {
+  color: #ff4c4c; /* Red color for the old score */
+}
+
+#new-score {
+  color: #4caf50; /* Green color for the new score */
+}
+
+#output-text {
+  white-space: pre-wrap;
+  text-align: justify;
+  margin-top: 15px;
+  padding: 15px;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+  color: #555;
+  font-family:"Times New Roman";
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .container {
+    padding: 20px;
   }
-  #output-text {
-    white-space: pre-wrap;
-    text-align: justify;
-    margin-top: 15px;
-    padding: 15px;
-    background: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 16px;
-    color: #555;
-    font-family:"Times New Roman";
+  textarea {
+    height: 120px;
   }
-  
-  /* Responsive Design */
-  @media (max-width: 600px) {
-    .container {
-      padding: 20px;
-    }
-    textarea {
-      height: 120px;
-    }
-    button {
-      width: 100%;
-      padding: 12px;
-    }
+  button {
+    width: 100%;
+    padding: 12px;
   }
-  
+}
