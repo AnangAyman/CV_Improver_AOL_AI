@@ -169,6 +169,12 @@ button:active {
   width: 100px;
   height: 100px;
   margin: 20px auto;
+  margin-top: 5px;
+}
+
+#circular-progress-container p{
+  margin-top: 0;
+  margin-bottom: 10px;
 }
 
 /* SVG styling */
@@ -210,7 +216,7 @@ button:active {
 /* Value text */
 .progress-value {
   position: absolute;
-  top: 50%;
+  top: 75%;
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 18px;
