@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, render_template
 import requests
 from AI import improve_cv_text
-
+from heuristics import heuristic_score
 
 app = Flask(__name__)
 
@@ -18,7 +18,11 @@ def improve_text():
     # Use GPT-2 function to improve the text
     try:
         improved_text = improve_cv_text(user_input)
-        return jsonify({'improved_text': improved_text})
+
+        previous_score = heuristic_score (user_input)
+        new_score = heuristic_score(improved_text)
+        
+        return jsonify({'improved_text': improved_text, 'previous_score' : previous_score, 'new_score': new_score})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 

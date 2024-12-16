@@ -1,33 +1,32 @@
 import torch
-from transformers import BloomTokenizerFast, BloomForCausalLM
-
-model_name = 'bigscience/bloom-1b7'  # You can use 'gpt2-medium' for a larger model
-tokenizer = BloomTokenizerFast.from_pretrained(model_name)
-model = BloomForCausalLM.from_pretrained(model_name)
+from transformers import GPT2LMHeadModel, GPT2Tokenizer
 
 
-def improve_cv_text(input_text, max_length=1000):
+model_name = 'gpt2-medium'  # You can use 'gpt2-medium' for a larger model
+tokenizer = GPT2Tokenizer.from_pretrained(model_name)
+model = GPT2LMHeadModel.from_pretrained(model_name)
+model.eval()  # Set the model to evaluation mode
+
+def improve_cv_text(input_text, max_length=500):
     # Tokenize the input text
-    prompt = f"Rewrite the following text to make it professional and concise for a CV: {input_text}"
+    # print(f"Score before: {heuristic_score(input_text)}")
+    prompt = f"Improve this text for a CV: {input_text}"
     inputs = tokenizer.encode(prompt, return_tensors='pt')
     attention_mask = torch.ones(inputs.shape, dtype=torch.long)
-
-    print(1)
-
     with torch.no_grad():
         outputs = model.generate(
             inputs,
             attention_mask=attention_mask,          # Explicit attention mask
-            max_length= max_length,
+            max_length=max_length,
             num_return_sequences=1,
             no_repeat_ngram_size=2,
             pad_token_id=tokenizer.eos_token_id    # Set pad token explicitly
         )
-        print(2)
     
     generated_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
-    print(3)
     # Decode the generated text
-    
-    print(4)
-    return generated_text
+    improved_text = generated_text[28:].strip()
+
+    final_result = improved_text
+    # print(f"Score after: {heuristic_score(final_result)}")
+    return final_result
