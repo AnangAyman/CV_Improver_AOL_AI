@@ -6,7 +6,7 @@ tokenizer = GPT2Tokenizer.from_pretrained(model_name)
 model = GPT2LMHeadModel.from_pretrained(model_name)
 model.eval()  # Set the model to evaluation mode
 
-def improve_cv_text(input_text, max_length=100):
+def improve_cv_text(input_text, max_length=500):
     # Tokenize the input text
     prompt = f"Improve this text for a CV: {input_text}"
     inputs = tokenizer.encode(prompt, return_tensors='pt')
@@ -15,7 +15,7 @@ def improve_cv_text(input_text, max_length=100):
         outputs = model.generate(
             inputs,
             attention_mask=attention_mask,          # Explicit attention mask
-            max_length=300,
+            max_length=max_length,
             num_return_sequences=1,
             no_repeat_ngram_size=2,
             pad_token_id=tokenizer.eos_token_id    # Set pad token explicitly
