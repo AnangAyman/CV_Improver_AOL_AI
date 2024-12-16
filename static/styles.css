@@ -186,15 +186,26 @@ button:active {
 }
 
 /* Progress circle */
-.progress-circle {
+.progress-circle-1 {
   fill: none;
-  stroke: rgb(79, 70, 229); /* Blue color */
+  stroke: rgb(240, 41, 27); /* Blue color */
   stroke-width: 10;
   stroke-linecap: round;
   stroke-dasharray: 283; /* 2 * Math.PI * 45 (circumference) */
   stroke-dashoffset: 283; /* Start hidden */
   transition: stroke-dashoffset 2s ease;
 }
+
+.progress-circle-2 {
+  fill: none;
+  stroke: rgb(16, 226, 27); /* Blue color */
+  stroke-width: 10;
+  stroke-linecap: round;
+  stroke-dasharray: 283; /* 2 * Math.PI * 45 (circumference) */
+  stroke-dashoffset: 283; /* Start hidden */
+  transition: stroke-dashoffset 2s ease;
+}
+
 
 /* Value text */
 .progress-value {

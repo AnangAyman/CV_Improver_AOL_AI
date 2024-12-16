@@ -24,17 +24,17 @@
                 <div id="circular-progress-container">
                     <svg viewBox="0 0 100 100" class="progress-bar">
                       <circle cx="50" cy="50" r="45" class="background-circle"></circle>
-                      <circle cx="50" cy="50" r="45" class="progress-circle"></circle>
+                      <circle id="progress-circle-1" cx="50" cy="50" r="45" class="progress-circle-1"></circle>
                     </svg>
-                    <span id="progress-value" class="progress-value">0%</span>
+                    <span id="progress-value-1" class="progress-value">0%</span>
                 </div>
 
                 <div id="circular-progress-container">
                     <svg viewBox="0 0 100 100" class="progress-bar">
                       <circle cx="50" cy="50" r="45" class="background-circle"></circle>
-                      <circle cx="50" cy="50" r="45" class="progress-circle"></circle>
+                      <circle id="progress-circle-2" cx="50" cy="50" r="45" class="progress-circle-2"></circle>
                     </svg>
-                    <span id="progress-value" class="progress-value">0%</span>
+                    <span id="progress-value-2" class="progress-value">0%</span>
                 </div>
 
                 
@@ -51,52 +51,65 @@
     
     <script>
         document.getElementById('improve-btn').addEventListener('click', async () => {
-            const inputText = document.getElementById('input-text').value;
-    
-            // Fetch the improved text from the server
-            const response = await fetch('/improve', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ text: inputText })
-            });
-    
-            const data = await response.json();
-    
-            // Display the improved text
-            const improvedText = data.improved_text || data.error;
-            const outputContainer = document.getElementById('output-container');
-            const outputText = document.getElementById('output-text');
-    
-            if (improvedText.trim()) {
-                outputText.textContent = improvedText;
-                outputContainer.style.maxHeight = '500px'; // Set a height sufficient to fit content
-                outputContainer.style.opacity = '1'; // Fade in
-    
-                // Wait for the text to be displayed, then update progress
-                const score = Math.floor(Math.random() * 101); // Example: Generate a random score (replace with actual logic)
-                updateProgress(score); // Pass the calculated score
-            } else {
-                outputContainer.style.maxHeight = '0'; // Hide the container
-                outputContainer.style.opacity = '0'; // Fade out
-            }
+        const inputText = document.getElementById('input-text').value;
+
+        // Fetch the improved text from the server
+        const response = await fetch('/improve', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text: inputText })
         });
-    
-        // Circular progress bar logic
-        const progressCircle = document.querySelector(".progress-circle");
-        const progressValue = document.getElementById("progress-value");
-    
-        function updateProgress(value) {
-            const max = 100;
-            const percent = (value / max) * 100;
-            const offset = 283 - (283 * percent) / 100; // Calculate stroke offset
-    
-            // Update the progress circle and value with smooth animation
-            progressCircle.style.strokeDashoffset = offset;
-            progressValue.textContent = `${percent.toFixed(0)}%`;
+
+        const data = await response.json();
+
+        // Display the improved text
+        const improvedText = data.improved_text || data.error;
+        const outputContainer = document.getElementById('output-container');
+        const outputText = document.getElementById('output-text');
+
+        if (improvedText.trim()) {
+            outputText.textContent = improvedText;
+            outputContainer.style.maxHeight = '500px'; // Set a height sufficient to fit content
+            outputContainer.style.opacity = '1'; // Fade in
+
+            // Wait for the text to be displayed, then update progress
+            const score1 = Math.floor(Math.random() * 101); // Example: Generate a random score (replace with actual logic)
+            const score2 = score1 + 20
+            updateProgress(score1, score2); // Pass the calculated score
+        } else {
+            outputContainer.style.maxHeight = '0'; // Hide the container
+            outputContainer.style.opacity = '0'; // Fade out
         }
-    
-        // Ensure the circle animation is smooth
-        progressCircle.style.transition = "stroke-dashoffset 1s ease-in-out";
+    });
+
+    // Circular progress bar logic
+    const progressCircle1 = document.getElementById("progress-circle-1");
+    const progressValue1 = document.getElementById("progress-value-1");
+
+    const progressCircle2 = document.getElementById("progress-circle-2");
+    const progressValue2 = document.getElementById("progress-value-2");
+
+    function updateProgress(value1, value2) {
+        const max = 100;
+        const percent1 = (value1 / max) * 100;
+        const offset1 = 283 - (283 * percent1) / 100; // Calculate stroke offset
+
+        const percent2 = (value2 / max) * 100;
+        const offset2 = 283 - (283 * percent2) / 100; // Calculate stroke offset
+
+        // Update the first circle and value
+        progressCircle1.style.strokeDashoffset = offset1;
+        progressValue1.textContent = `${percent1.toFixed(0)}%`;
+
+        // Update the second circle and value
+        progressCircle2.style.strokeDashoffset = offset2;
+        progressValue2.textContent = `${percent2.toFixed(0)}%`;
+    }
+
+    // Ensure both circles have smooth animations
+    progressCircle1.style.transition = "stroke-dashoffset 1s ease-in-out";
+    progressCircle2.style.transition = "stroke-dashoffset 1s ease-in-out";
+
     </script>
     
                
