@@ -75,8 +75,8 @@
             outputContainer.style.opacity = '1'; // Fade in
 
             // Wait for the text to be displayed, then update progress
-            const score1 = Math.floor(Math.random() * 101); // Example: Generate a random score (replace with actual logic)
-            const score2 = score1 + 20
+            const score1 = data.previous_score // Example: Generate a random score (replace with actual logic)
+            const score2 = data.new_score
             updateProgress(score1, score2); // Pass the calculated score
         } else {
             outputContainer.style.maxHeight = '0'; // Hide the container
