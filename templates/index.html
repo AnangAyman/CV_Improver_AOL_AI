@@ -48,6 +48,7 @@
         </div>
     </div>
 
+    
     <script>
         document.getElementById('improve-btn').addEventListener('click', async () => {
             const inputText = document.getElementById('input-text').value;
@@ -72,7 +73,8 @@
                 outputContainer.style.opacity = '1'; // Fade in
     
                 // Wait for the text to be displayed, then update progress
-                updateProgress();
+                const score = Math.floor(Math.random() * 101); // Example: Generate a random score (replace with actual logic)
+                updateProgress(score); // Pass the calculated score
             } else {
                 outputContainer.style.maxHeight = '0'; // Hide the container
                 outputContainer.style.opacity = '0'; // Fade out
@@ -80,29 +82,24 @@
         });
     
         // Circular progress bar logic
-        var progressCircle = document.querySelector(".progress-circle");
-        var progressValue = document.getElementById("progress-value");
+        const progressCircle = document.querySelector(".progress-circle");
+        const progressValue = document.getElementById("progress-value");
     
-    
-        function updateProgress() {
-            let value = 0;
+        function updateProgress(value) {
             const max = 100;
-            console.log(value)
-
-            value += 60; // Increment value by 60 bakal di change jadi score awal
-            var percent = (value / max) * 100;
-            var offset = 283 - (283 * percent) / 100; // Calculate stroke offset
+            const percent = (value / max) * 100;
+            const offset = 283 - (283 * percent) / 100; // Calculate stroke offset
     
-            // Update the progress circle and value
+            // Update the progress circle and value with smooth animation
             progressCircle.style.strokeDashoffset = offset;
             progressValue.textContent = `${percent.toFixed(0)}%`;
-
-            value = 0;
         }
-
     
-    
+        // Ensure the circle animation is smooth
+        progressCircle.style.transition = "stroke-dashoffset 1s ease-in-out";
     </script>
+    
+               
 
 </body>
 </html>
