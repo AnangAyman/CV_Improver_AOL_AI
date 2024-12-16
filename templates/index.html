@@ -20,14 +20,24 @@
         <!-- hidden part -->
         <div id="output-container">
             <div id="score">
-                <div id="score-container">
-                    <h2>Old Score</h2>
-                    <p id="old-score">60</p>
+
+                <div id="circular-progress-container">
+                    <svg viewBox="0 0 100 100" class="progress-bar">
+                      <circle cx="50" cy="50" r="45" class="background-circle"></circle>
+                      <circle cx="50" cy="50" r="45" class="progress-circle"></circle>
+                    </svg>
+                    <span id="progress-value" class="progress-value">0%</span>
                 </div>
-                <div id="score-container">
-                    <h2>New Score</h2>
-                    <p id="new-score">80</p>
+
+                <div id="circular-progress-container">
+                    <svg viewBox="0 0 100 100" class="progress-bar">
+                      <circle cx="50" cy="50" r="45" class="background-circle"></circle>
+                      <circle cx="50" cy="50" r="45" class="progress-circle"></circle>
+                    </svg>
+                    <span id="progress-value" class="progress-value">0%</span>
                 </div>
+
+                
             </div>
             
             <div>
@@ -37,31 +47,62 @@
             
         </div>
     </div>
+
     <script>
         document.getElementById('improve-btn').addEventListener('click', async () => {
             const inputText = document.getElementById('input-text').value;
+    
+            // Fetch the improved text from the server
             const response = await fetch('/improve', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ text: inputText })
             });
+    
             const data = await response.json();
-            document.getElementById('output-text').textContent = data.improved_text || data.error;
-
-            const improvedText = document.getElementById('output-text').textContent;
+    
+            // Display the improved text
+            const improvedText = data.improved_text || data.error;
             const outputContainer = document.getElementById('output-container');
             const outputText = document.getElementById('output-text');
-
+    
             if (improvedText.trim()) {
                 outputText.textContent = improvedText;
                 outputContainer.style.maxHeight = '500px'; // Set a height sufficient to fit content
                 outputContainer.style.opacity = '1'; // Fade in
+    
+                // Wait for the text to be displayed, then update progress
+                updateProgress();
             } else {
                 outputContainer.style.maxHeight = '0'; // Hide the container
                 outputContainer.style.opacity = '0'; // Fade out
             }
-
         });
+    
+        // Circular progress bar logic
+        var progressCircle = document.querySelector(".progress-circle");
+        var progressValue = document.getElementById("progress-value");
+    
+    
+        function updateProgress() {
+            let value = 0;
+            const max = 100;
+            console.log(value)
+
+            value += 60; // Increment value by 60 bakal di change jadi score awal
+            var percent = (value / max) * 100;
+            var offset = 283 - (283 * percent) / 100; // Calculate stroke offset
+    
+            // Update the progress circle and value
+            progressCircle.style.strokeDashoffset = offset;
+            progressValue.textContent = `${percent.toFixed(0)}%`;
+
+            value = 0;
+        }
+
+    
+    
     </script>
+
 </body>
 </html>

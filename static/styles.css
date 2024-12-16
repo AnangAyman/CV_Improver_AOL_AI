@@ -136,7 +136,6 @@ button:active {
   transition: box-shadow 0.2s ease-in;
 }
 
-
 /* Output Container */
 #output-container {
   margin-top: 20px;
@@ -164,30 +163,47 @@ button:active {
   margin: 20px; /* Add space at the top */
 }
 
-#score-container {
-  background-color: #6c6ca0; /* Darker background for each score container */
-  margin: 0 20px; /* Reduced margin for better alignment */
-  padding: 20px;
-  border-radius: 8px; /* Rounded corners for each container */
-  width: 200px; /* Fixed width for score containers */
-  text-align: center; /* Center the text inside each container */
-  color: white; /* White text for contrast */
+/* Styling the container */
+#circular-progress-container {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  margin: 20px auto;
 }
 
-#old-score,
-#new-score {
-  font-size: 40px;
-  font-weight: bold; /* Make the score stand out more */
-  padding: 10px;
-  margin: 0; /* Remove default margin for consistent spacing */
+/* SVG styling */
+.progress-bar {
+  width: 100px;
+  height: 100px;
+  transform: rotate(-90deg); /* Start the animation from the top */
 }
 
-#old-score {
-  color: #ff4c4c; /* Red color for the old score */
+/* Background circle */
+.background-circle {
+  fill: none;
+  stroke: rgba(0, 0, 0, 0.1);
+  stroke-width: 10;
 }
 
-#new-score {
-  color: #4caf50; /* Green color for the new score */
+/* Progress circle */
+.progress-circle {
+  fill: none;
+  stroke: rgb(79, 70, 229); /* Blue color */
+  stroke-width: 10;
+  stroke-linecap: round;
+  stroke-dasharray: 283; /* 2 * Math.PI * 45 (circumference) */
+  stroke-dashoffset: 283; /* Start hidden */
+  transition: stroke-dashoffset 2s ease;
+}
+
+/* Value text */
+.progress-value {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 18px;
+  font-weight: bold;
 }
 
 #output-text {
