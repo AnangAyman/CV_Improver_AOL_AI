@@ -15,7 +15,6 @@ def improve_text():
     if not user_input:
         return jsonify({'error': 'No input text provided'}), 400
 
-    # Use GPT-2 function to improve the text
     try:
         improved_text = improve_cv_text(user_input)
 
