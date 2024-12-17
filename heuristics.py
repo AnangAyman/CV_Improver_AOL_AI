@@ -58,7 +58,7 @@ def heuristic_score(text):
     final_score = math.floor(weighted_score/2)
 
     # Debugging output
-    # print(f"Readability: {readability}, Grammar Penalty: {grammar_penalty}, Sentiment Score: {sentiment_score}, Keyword Score: {keyword_score}, Final Score: {final_score}")
+    print(f"Readability: {readability}, Grammar Penalty: {grammar_penalty}, Sentiment Score: {sentiment_score}, Keyword Score: {keyword_score}, Final Score: {final_score}")
 
     if final_score < 0:
         final_score = 0
