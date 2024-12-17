@@ -101,9 +101,7 @@
             const improvedText = data.improved_text || data.error;
 
             if (improvedText.trim()) {
-              outputText.textContent =
-                "Rewrite the following text to make it professional and concise for a CV:\n\n" +
-                improvedText;
+              outputText.textContent = improvedText;
 
               // Show the output container with animation
               outputContainer.style.display = "block";
