@@ -21,7 +21,8 @@ def heuristic_score(text):
 
     # Step 4: Keyword presence for CVs (e.g., "team", "managed", "developed")
     cv_keywords = ["team", "managed", "developed", "analyzed", "designed", "implemented"]
-    keyword_score = sum(1 for word in text.lower().split() if word in cv_keywords)
+    stemmed_text = text.lower().split()  # Simplified for keywords
+    keyword_score = sum(1 for word in stemmed_text if word in cv_keywords)
 
     # Step 5: Weighting and combining scores
     grammar_weight = -5
@@ -30,20 +31,18 @@ def heuristic_score(text):
     keyword_weight = 3
 
     weighted_score = (
-        readability * readability_weight +
-        sentiment_score * sentiment_weight +
-        keyword_score * keyword_weight +
-        grammar_penalty * grammar_weight
+        readability * readability_weight
+        + sentiment_score * sentiment_weight
+        + keyword_score * keyword_weight
+        + grammar_penalty * grammar_weight
     )
 
     final_score = math.floor(weighted_score)
 
+    # Normalize final score between 0 and 100
+    final_score = max(0, min(final_score, 100))
+
     # Debugging output
     # print(f"Readability: {readability}, Grammar Penalty: {grammar_penalty}, Sentiment Score: {sentiment_score}, Keyword Score: {keyword_score}, Final Score: {final_score}")
-
-    if final_score < 0:
-        final_score = 0
-    elif final_score > 100:
-        final_score = 100
 
     return final_score
