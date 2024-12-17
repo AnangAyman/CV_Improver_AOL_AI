@@ -5,7 +5,7 @@ from transformers import pipeline
 
 grammar_tool = language_tool_python.LanguageTool('en-US')
 # Initialize grammar correction model and sentiment analysis pipeline
-sentiment_analyzer = pipeline("sentiment-analysis", model="cardiffnlp/twitter-roberta-base-sentiment")
+sentiment_analyzer = pipeline("sentiment-analysis", model="distilbert-base-uncased-finetuned-sst-2-english")
 
 def heuristic_score(text):
     # Step 1: Grammar check
@@ -24,10 +24,10 @@ def heuristic_score(text):
     keyword_score = sum(1 for word in text.lower().split() if word in cv_keywords)
 
     # Step 5: Weighting and combining scores
-    grammar_weight = -5
-    readability_weight = 1
-    sentiment_weight = 2
-    keyword_weight = 3
+    grammar_weight = -2
+    readability_weight = 0.7
+    sentiment_weight = 45
+    keyword_weight = 5
 
     weighted_score = (
         readability * readability_weight +
@@ -39,7 +39,7 @@ def heuristic_score(text):
     final_score = math.floor(weighted_score)
 
     # Debugging output
-    # print(f"Readability: {readability}, Grammar Penalty: {grammar_penalty}, Sentiment Score: {sentiment_score}, Keyword Score: {keyword_score}, Final Score: {final_score}")
+    print(f"Readability: {readability}, Grammar Penalty: {grammar_penalty}, Sentiment Score: {sentiment_score}, Keyword Score: {keyword_score}, Final Score: {final_score}")
 
     if final_score < 0:
         final_score = 0
