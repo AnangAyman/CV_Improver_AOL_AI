@@ -1,97 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/styles.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/static/styles.css" />
     <title>CV Text Improver</title>
-</head>
-<body>
-  <header>
-    <h1>Welcome to CV Text Improver</h1>
-      <p>Enhance your CV effortlessly with our powerful tools</p>
+  </head>
+  <body>
+    <header>
+      <h1>Welcome to CV Text Improver</h1>
+      <p>Enhance your CV effortlessly with our powerful tool!</p>
     </header>
 
     <div class="container">
-        <h1>Input Text</h1>
-        <textarea id="input-text" placeholder="Paste your CV text here..."></textarea>
-        <button id="improve-btn">Improve Text</button>
+      <h1>Input Text</h1>
+      <textarea
+        id="input-text"
+        placeholder="Paste your CV text here..."
+      ></textarea>
+      <div
+        id="loading-container"
+        class="loading-container"
+        style="display: none"
+      >
+        <div class="loading-ball"></div>
+      </div>
+      <button id="improve-btn">Improve Text</button>
 
-        <!-- hidden part -->
-        <div id="output-container">
-            <div id="score">
+      <!-- hidden part -->
+      <div id="output-container" style="display: none">
+        <div id="score">
+          <div id="circular-progress-container">
+            <p>Old Score</p>
+            <svg viewBox="0 0 100 100" class="progress-bar">
+              <circle cx="50" cy="50" r="45" class="background-circle"></circle>
+              <circle
+                id="progress-circle-1"
+                cx="50"
+                cy="50"
+                r="45"
+                class="progress-circle-1"
+              ></circle>
+            </svg>
+            <span id="progress-value-1" class="progress-value">0%</span>
+          </div>
 
-                <div id="circular-progress-container">
-                    <p>Old Score</p>
-                    <svg viewBox="0 0 100 100" class="progress-bar">
-                      <circle cx="50" cy="50" r="45" class="background-circle"></circle>
-                      <circle id="progress-circle-1" cx="50" cy="50" r="45" class="progress-circle-1"></circle>
-                    </svg>
-                    <span id="progress-value-1" class="progress-value">0%</span>
-                </div>
-
-                <div id="circular-progress-container">
-                    <p>New Score</p>
-                    <svg viewBox="0 0 100 100" class="progress-bar">
-                      <circle cx="50" cy="50" r="45" class="background-circle"></circle>
-                      <circle id="progress-circle-2" cx="50" cy="50" r="45" class="progress-circle-2"></circle>
-                    </svg>
-                    <span id="progress-value-2" class="progress-value">0%</span>
-                </div>
-
-                
-            </div>
-            
-            <div>
-                <h2>Improved Text</h2>
-                <p id="output-text"></p>
-            </div>
-            
+          <div id="circular-progress-container">
+            <p>New Score</p>
+            <svg viewBox="0 0 100 100" class="progress-bar">
+              <circle cx="50" cy="50" r="45" class="background-circle"></circle>
+              <circle
+                id="progress-circle-2"
+                cx="50"
+                cy="50"
+                r="45"
+                class="progress-circle-2"
+              ></circle>
+            </svg>
+            <span id="progress-value-2" class="progress-value">0%</span>
+          </div>
         </div>
+
+        <div>
+          <h2>Improved Text</h2>
+          <pre id="output-text"></pre>
+        </div>
+      </div>
     </div>
 
-    
     <script>
-        document.getElementById('improve-btn').addEventListener('click', async () => {
-        const inputText = document.getElementById('input-text').value;
+      document
+        .getElementById("improve-btn")
+        .addEventListener("click", async () => {
+          const inputText = document.getElementById("input-text").value;
+          const outputContainer = document.getElementById("output-container");
+          const outputText = document.getElementById("output-text");
+          const improveBtn = document.getElementById("improve-btn");
+          const loadingContainer = document.getElementById("loading-container");
 
-        // Fetch the improved text from the server
-        const response = await fetch('/improve', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ text: inputText })
+          // Disable button and show loading
+          improveBtn.disabled = true;
+          loadingContainer.style.display = "flex";
+
+          // Reset output container
+          outputContainer.style.display = "none";
+          outputContainer.style.maxHeight = "0";
+          outputContainer.style.opacity = "0";
+
+          try {
+            // Fetch the improved text from the server
+            const response = await fetch("/improve", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ text: inputText }),
+            });
+
+            const data = await response.json();
+
+            // Display the improved text
+            const improvedText = data.improved_text || data.error;
+
+            if (improvedText.trim()) {
+              outputText.textContent = improvedText;
+
+              // Show the output container with animation
+              outputContainer.style.display = "block";
+
+              // Use setTimeout to ensure display change takes effect before transition
+              setTimeout(() => {
+                outputContainer.style.maxHeight = "1000px"; // Use a large value to accommodate content
+                outputContainer.style.opacity = "1";
+              }, 10);
+
+              // Wait for the text to be displayed, then update progress
+              const score1 = data.previous_score || 50;
+              const score2 = data.new_score || 85;
+              updateProgress(score1, score2);
+            }
+          } catch (error) {
+            console.error("Error:", error);
+          } finally {
+            // Always hide loading and re-enable button
+            loadingContainer.style.display = "none";
+            improveBtn.disabled = false;
+          }
         });
 
-        const data = await response.json();
+      // Circular progress bar logic
+      const progressCircle1 = document.getElementById("progress-circle-1");
+      const progressValue1 = document.getElementById("progress-value-1");
 
-        // Display the improved text
-        const improvedText = data.improved_text || data.error;
-        const outputContainer = document.getElementById('output-container');
-        const outputText = document.getElementById('output-text');
+      const progressCircle2 = document.getElementById("progress-circle-2");
+      const progressValue2 = document.getElementById("progress-value-2");
 
-        if (improvedText.trim()) {
-            outputText.textContent = improvedText;
-            outputContainer.style.maxHeight = '500px'; // Set a height sufficient to fit content
-            outputContainer.style.opacity = '1'; // Fade in
-
-            // Wait for the text to be displayed, then update progress
-            const score1 = data.previous_score // Example: Generate a random score (replace with actual logic)
-            const score2 = data.new_score
-            updateProgress(score1, score2); // Pass the calculated score
-        } else {
-            outputContainer.style.maxHeight = '0'; // Hide the container
-            outputContainer.style.opacity = '0'; // Fade out
-        }
-    });
-
-    // Circular progress bar logic
-    const progressCircle1 = document.getElementById("progress-circle-1");
-    const progressValue1 = document.getElementById("progress-value-1");
-
-    const progressCircle2 = document.getElementById("progress-circle-2");
-    const progressValue2 = document.getElementById("progress-value-2");
-
-    function updateProgress(value1, value2) {
+      function updateProgress(value1, value2) {
         const max = 100;
         const percent1 = (value1 / max) * 100;
         const offset1 = 283 - (283 * percent1) / 100; // Calculate stroke offset
@@ -106,15 +148,11 @@
         // Update the second circle and value
         progressCircle2.style.strokeDashoffset = offset2;
         progressValue2.textContent = `${percent2.toFixed(0)}%`;
-    }
+      }
 
-    // Ensure both circles have smooth animations
-    progressCircle1.style.transition = "stroke-dashoffset 1s ease-in-out";
-    progressCircle2.style.transition = "stroke-dashoffset 1s ease-in-out";
-
+      // Ensure both circles have smooth animations
+      progressCircle1.style.transition = "stroke-dashoffset 1s ease-in-out";
+      progressCircle2.style.transition = "stroke-dashoffset 1s ease-in-out";
     </script>
-    
-               
-
-</body>
+  </body>
 </html>

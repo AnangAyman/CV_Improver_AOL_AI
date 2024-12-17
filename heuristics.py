@@ -49,16 +49,16 @@ def heuristic_score(text):
     keyword_weight = 5
 
     weighted_score = (
-        readability * readability_weight +
-        sentiment_score * sentiment_weight +
-        keyword_score * keyword_weight +
-        grammar_penalty * grammar_weight
+        readability * readability_weight
+        + sentiment_score * sentiment_weight
+        + keyword_score * keyword_weight
+        + grammar_penalty * grammar_weight
     )
 
     final_score = math.floor(weighted_score/2)
 
     # Debugging output
-    print(f"Readability: {readability}, Grammar Penalty: {grammar_penalty}, Sentiment Score: {sentiment_score}, Keyword Score: {keyword_score}, Final Score: {final_score}")
+    # print(f"Readability: {readability}, Grammar Penalty: {grammar_penalty}, Sentiment Score: {sentiment_score}, Keyword Score: {keyword_score}, Final Score: {final_score}")
 
     if final_score < 0:
         final_score = 0

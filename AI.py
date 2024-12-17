@@ -15,6 +15,9 @@ def improve_cv_text(input_text, max_length=500):
     prompt = f"Improve the following text to make it more professional and free from grammatical errors: {input_text}"
     inputs = tokenizer.encode(prompt, return_tensors='pt')
     attention_mask = torch.ones(inputs.shape, dtype=torch.long)
+
+    print(1)
+
     with torch.no_grad():
         outputs = model.generate(
             inputs,
@@ -29,6 +32,7 @@ def improve_cv_text(input_text, max_length=500):
             pad_token_id=tokenizer.eos_token_id    # Set pad token explicitly
         )
     generated_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
+    print(3)
     # Decode the generated text
     improved_text = generated_text[90:].strip()
 
