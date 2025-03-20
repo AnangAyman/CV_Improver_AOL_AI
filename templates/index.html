@@ -141,13 +141,15 @@
         const percent2 = (value2 / max) * 100;
         const offset2 = 283 - (283 * percent2) / 100; // Calculate stroke offset
 
-        // Update the first circle and value
-        progressCircle1.style.strokeDashoffset = offset1;
-        progressValue1.textContent = `${percent1.toFixed(0)}%`;
+        setTimeout(()=>{
+          // Update the first circle and value
+          progressCircle1.style.strokeDashoffset = offset1;
+          progressValue1.textContent = `${percent1.toFixed(0)}%`;
 
-        // Update the second circle and value
-        progressCircle2.style.strokeDashoffset = offset2;
-        progressValue2.textContent = `${percent2.toFixed(0)}%`;
+          // Update the second circle and value
+          progressCircle2.style.strokeDashoffset = offset2;
+          progressValue2.textContent = `${percent2.toFixed(0)}%`;
+        }, 100);
       }
 
       // Ensure both circles have smooth animations

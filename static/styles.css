@@ -135,7 +135,7 @@ button:hover {
   stroke-linecap: round;
   stroke-dasharray: 283;
   stroke-dashoffset: 283;
-  transition: stroke-dashoffset 2s ease;
+  transition: stroke-dashoffset 5s ease;
 }
 
 .progress-circle-1 {
