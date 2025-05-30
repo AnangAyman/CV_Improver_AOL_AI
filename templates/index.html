@@ -220,66 +220,7 @@
             return 1 - Math.pow(1 - t, 3);
         }
 
-        // Demo functionality for testing without backend
-        // This part is useful for frontend development if your backend isn't ready.
-        // You might want to remove or comment it out when deploying with a live backend.
-        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-            const originalImproveHandler = document.getElementById('improve-btn').onclick; // Store original if any
-            document.getElementById('improve-btn').addEventListener('click', async (e) => {
-                 // Check if the click is genuinely on the button and not a propagated event from a child
-                if (e.target.closest('.action-button').id === 'improve-btn' && !e.target.closest('.action-button').disabled ) {
-                    e.preventDefault(); // Prevent default only if it's the demo override
-
-                    // Check if this is the demo override path
-                    if (typeof originalImproveHandler === 'function' && e.isTrusted) {
-                        // If an original handler exists and it's a trusted event, maybe call it?
-                        // Or, ensure this demo code only runs if the '/improve' fetch would fail (e.g. no backend)
-                        // For simplicity, this demo override will take over on localhost.
-                    }
-                    
-                    const inputText = document.getElementById('input-text').value.trim();
-                    if (!inputText) {
-                        alert('Please enter some text to improve!');
-                        return;
-                    }
-
-                    const outputSection = document.getElementById('output-section');
-                    const improvedTextDiv = document.getElementById('improved-text');
-                    const improveBtn = document.getElementById('improve-btn');
-                    const loadingContainer = document.getElementById('loading-container');
-
-                    improveBtn.disabled = true;
-                    loadingContainer.style.display = 'flex';
-                    outputSection.classList.remove('show');
-
-                    await new Promise(resolve => setTimeout(resolve, 1500)); // Shorter delay for demo
-
-                    const demoImprovedText = `As an accomplished software developer with a robust 5-year background in full-stack development, I have consistently led cross-functional teams (8+ members) to successfully deliver over 15 high-impact projects, adhering to strict timelines. My proficiency in React, Node.js, and Python has been instrumental in achieving a 40% improvement in application performance. I excel in collaborating with stakeholders to architect and implement innovative solutions that significantly enhance user experience and drive substantial business growth.`;
-
-                    improvedTextDiv.textContent = demoImprovedText;
-                    
-                    const demoOldScore = Math.floor(Math.random() * 30) + 50; // Random old score 50-79
-                    const demoNewScore = Math.floor(Math.random() * 20) + 80; // Random new score 80-99
-                    updateScores(demoOldScore, demoNewScore);
-                    updateStats(demoOldScore, demoNewScore);
-                    
-                    const improvementBadge = document.getElementById('improvement-badge');
-                    const improvementText = document.getElementById('improvement-text');
-                    if (demoNewScore > demoOldScore) {
-                        improvementText.textContent = `Score improved by ${demoNewScore - demoOldScore} points!`;
-                        improvementBadge.style.display = 'inline-flex';
-                    } else {
-                        improvementBadge.style.display = 'none';
-                    }
-                    
-
-                    outputSection.classList.add('show');
-
-                    loadingContainer.style.display = 'none';
-                    improveBtn.disabled = false;
-                }
-            }, true); // Use capture phase for the demo override if necessary, or ensure proper event handling
-        }
+        
     </script>
 </body>
 </html>
