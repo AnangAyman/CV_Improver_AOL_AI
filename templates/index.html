@@ -1,160 +1,285 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/static/styles.css" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CV Text Improver</title>
-  </head>
-  <body>
-    <header>
-      <h1>Welcome to CV Text Improver</h1>
-      <p>Enhance your CV effortlessly with our powerful tool!</p>
-    </header>
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="static/styles.css"> 
+</head>
+<body>
     <div class="container">
-      <h1>Input Text</h1>
-      <textarea
-        id="input-text"
-        placeholder="Paste your CV text here..."
-      ></textarea>
-      <div
-        id="loading-container"
-        class="loading-container"
-        style="display: none"
-      >
-        <div class="loading-ball"></div>
-      </div>
-      <button id="improve-btn">Improve Text</button>
-
-      <!-- hidden part -->
-      <div id="output-container" style="display: none">
-        <div id="score">
-          <div id="circular-progress-container">
-            <p>Old Score</p>
-            <svg viewBox="0 0 100 100" class="progress-bar">
-              <circle cx="50" cy="50" r="45" class="background-circle"></circle>
-              <circle
-                id="progress-circle-1"
-                cx="50"
-                cy="50"
-                r="45"
-                class="progress-circle-1"
-              ></circle>
-            </svg>
-            <span id="progress-value-1" class="progress-value">0%</span>
-          </div>
-
-          <div id="circular-progress-container">
-            <p>New Score</p>
-            <svg viewBox="0 0 100 100" class="progress-bar">
-              <circle cx="50" cy="50" r="45" class="background-circle"></circle>
-              <circle
-                id="progress-circle-2"
-                cx="50"
-                cy="50"
-                r="45"
-                class="progress-circle-2"
-              ></circle>
-            </svg>
-            <span id="progress-value-2" class="progress-value">0%</span>
-          </div>
+        <div class="header">
+            <h1><i class="fas fa-magic"></i> CV Text Improver</h1>
+            <p>Transform your CV text with AI-powered enhancement</p>
         </div>
 
-        <div>
-          <h2>Improved Text</h2>
-          <pre id="output-text"></pre>
+        <div class="main-content">
+            <div class="input-section">
+                <div class="section-title">
+                    <i class="fas fa-edit"></i>
+                    Input Your Text
+                </div>
+                <textarea 
+                    id="input-text" 
+                    placeholder="Paste your CV text here and watch the magic happen..."></textarea>
+                
+                <div class="loading-container" id="loading-container">
+                    <div class="loading-spinner"></div>
+                </div>
+                
+                <button class="action-button" id="improve-btn">
+                    <i class="fas fa-rocket"></i>
+                    Improve My CV Text
+                </button>
+            </div>
+
+            <div class="output-section" id="output-section">
+                <div class="section-title">
+                    <i class="fas fa-chart-line"></i>
+                    Your Improved Results
+                </div>
+
+                <div class="scores-container">
+                    <div class="score-card">
+                        <div class="score-label">Before</div>
+                        <div class="score-circle">
+                            <svg viewBox="0 0 100 100" class="progress-ring">
+                                <defs>
+                                    <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#ef4444"/>
+                                        <stop offset="100%" style="stop-color:#f97316"/>
+                                    </linearGradient>
+                                </defs>
+                                <circle cx="50" cy="50" r="45" class="progress-ring-bg"></circle>
+                                <circle cx="50" cy="50" r="45" class="progress-ring-fill old-score" id="old-progress"></circle>
+                            </svg>
+                            <div class="score-value" id="old-score-value">0</div>
+                        </div>
+                    </div>
+
+                    <div class="score-card">
+                        <div class="score-label">After</div>
+                        <div class="score-circle">
+                            <svg viewBox="0 0 100 100" class="progress-ring">
+                                <defs>
+                                    <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#8b5cf6"/>
+                                        <stop offset="100%" style="stop-color:#a855f7"/>
+                                    </linearGradient>
+                                </defs>
+                                <circle cx="50" cy="50" r="45" class="progress-ring-bg"></circle>
+                                <circle cx="50" cy="50" r="45" class="progress-ring-fill new-score" id="new-progress"></circle>
+                            </svg>
+                            <div class="score-value" id="new-score-value">0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="improvement-badge" id="improvement-badge" style="display: none;">
+                    <i class="fas fa-arrow-up"></i>
+                    <span id="improvement-text">Score improved!</span>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value" id="readability-stat">-</div>
+                        <div class="stat-label">Readability</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="keywords-stat">-</div>
+                        <div class="stat-label">Keywords</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="grammar-stat">-</div>
+                        <div class="stat-label">Grammar</div>
+                    </div>
+                </div>
+
+                <div class="improved-text" id="improved-text"></div>
+            </div>
         </div>
-      </div>
     </div>
 
     <script>
-      document
-        .getElementById("improve-btn")
-        .addEventListener("click", async () => {
-          const inputText = document.getElementById("input-text").value;
-          const outputContainer = document.getElementById("output-container");
-          const outputText = document.getElementById("output-text");
-          const improveBtn = document.getElementById("improve-btn");
-          const loadingContainer = document.getElementById("loading-container");
+        document.getElementById('improve-btn').addEventListener('click', async () => {
+            const inputText = document.getElementById('input-text').value.trim();
+            const outputSection = document.getElementById('output-section');
+            const improvedTextDiv = document.getElementById('improved-text');
+            const improveBtn = document.getElementById('improve-btn');
+            const loadingContainer = document.getElementById('loading-container');
 
-          // Disable button and show loading
-          improveBtn.disabled = true;
-          loadingContainer.style.display = "flex";
-
-          // Reset output container
-          outputContainer.style.display = "none";
-          outputContainer.style.maxHeight = "0";
-          outputContainer.style.opacity = "0";
-
-          try {
-            // Fetch the improved text from the server
-            const response = await fetch("/improve", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ text: inputText }),
-            });
-
-            const data = await response.json();
-
-            // Display the improved text
-            const improvedText = data.improved_text || data.error;
-
-            if (improvedText.trim()) {
-              outputText.textContent = improvedText;
-
-              // Show the output container with animation
-              outputContainer.style.display = "block";
-
-              // Use setTimeout to ensure display change takes effect before transition
-              setTimeout(() => {
-                outputContainer.style.maxHeight = "1000px"; // Use a large value to accommodate content
-                outputContainer.style.opacity = "1";
-              }, 10);
-
-              // Wait for the text to be displayed, then update progress
-              const score1 = data.previous_score || 50;
-              const score2 = data.new_score || 85;
-              updateProgress(score1, score2);
+            if (!inputText) {
+                alert('Please enter some text to improve!');
+                return;
             }
-          } catch (error) {
-            console.error("Error:", error);
-          } finally {
-            // Always hide loading and re-enable button
-            loadingContainer.style.display = "none";
-            improveBtn.disabled = false;
-          }
+
+            // Show loading state
+            improveBtn.disabled = true;
+            loadingContainer.style.display = 'flex';
+            outputSection.classList.remove('show');
+
+            try {
+                // Simulate API call (replace with actual endpoint)
+                const response = await fetch('/improve', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text: inputText })
+                });
+
+                const data = await response.json();
+
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+
+                // Display results
+                improvedTextDiv.textContent = data.improved_text;
+                
+                // Update scores with animation
+                const oldScore = data.previous_score || 65; // Default or example values
+                const newScore = data.new_score || 85; // Default or example values
+                
+                updateScores(oldScore, newScore);
+                updateStats(oldScore, newScore); // Example function, ensure it's defined or data is available
+                
+                // Show improvement badge
+                const improvementBadge = document.getElementById('improvement-badge');
+                const improvementText = document.getElementById('improvement-text');
+                
+                if (newScore > oldScore) {
+                    const improvement = newScore - oldScore;
+                    improvementText.textContent = `Score improved by ${improvement} points!`;
+                    improvementBadge.style.display = 'inline-flex';
+                } else {
+                    improvementBadge.style.display = 'none';
+                }
+
+                // Show output section
+                outputSection.classList.add('show');
+                
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while improving your text. Please try again.');
+            } finally {
+                // Hide loading state
+                loadingContainer.style.display = 'none';
+                improveBtn.disabled = false;
+            }
         });
 
-      // Circular progress bar logic
-      const progressCircle1 = document.getElementById("progress-circle-1");
-      const progressValue1 = document.getElementById("progress-value-1");
+        function updateScores(oldScore, newScore) {
+            const oldProgressCircle = document.getElementById('old-progress');
+            const newProgressCircle = document.getElementById('new-progress');
+            const oldScoreValue = document.getElementById('old-score-value');
+            const newScoreValue = document.getElementById('new-score-value');
 
-      const progressCircle2 = document.getElementById("progress-circle-2");
-      const progressValue2 = document.getElementById("progress-value-2");
+            // Calculate stroke dash offset for progress circles
+            const circumference = 283; // This value is based on r=45 (2 * PI * 45)
+            const oldOffset = circumference - (circumference * oldScore) / 100;
+            const newOffset = circumference - (circumference * newScore) / 100;
 
-      function updateProgress(value1, value2) {
-        const max = 100;
-        const percent1 = (value1 / max) * 100;
-        const offset1 = 283 - (283 * percent1) / 100; // Calculate stroke offset
+            // Animate progress circles
+            // Using a timeout to ensure transition applies after display (if any change)
+            setTimeout(() => {
+                oldProgressCircle.style.strokeDashoffset = oldOffset;
+                newProgressCircle.style.strokeDashoffset = newOffset;
+            }, 100); // Small delay
 
-        const percent2 = (value2 / max) * 100;
-        const offset2 = 283 - (283 * percent2) / 100; // Calculate stroke offset
+            // Animate score values
+            animateValue(oldScoreValue, 0, oldScore, 1500);
+            animateValue(newScoreValue, 0, newScore, 1500);
+        }
 
-        setTimeout(()=>{
-          // Update the first circle and value
-          progressCircle1.style.strokeDashoffset = offset1;
-          progressValue1.textContent = `${percent1.toFixed(0)}%`;
+        function updateStats(oldScore, newScore) {
+            // Demo stats - replace with actual data from your API or heuristics.py
+            document.getElementById('readability-stat').textContent = Math.floor(newScore * 0.8); // Example
+            document.getElementById('keywords-stat').textContent = Math.floor(newScore * 0.6); // Example
+            document.getElementById('grammar-stat').textContent = Math.floor(newScore * 0.9); // Example
+        }
 
-          // Update the second circle and value
-          progressCircle2.style.strokeDashoffset = offset2;
-          progressValue2.textContent = `${percent2.toFixed(0)}%`;
-        }, 100);
-      }
+        function animateValue(element, start, end, duration) {
+            const startTime = performance.now();
+            
+            function updateValue(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const currentValue = Math.floor(start + (end - start) * easeOutCubic(progress));
+                
+                element.textContent = currentValue;
+                
+                if (progress < 1) {
+                    requestAnimationFrame(updateValue);
+                }
+            }
+            
+            requestAnimationFrame(updateValue);
+        }
 
-      // Ensure both circles have smooth animations
-      progressCircle1.style.transition = "stroke-dashoffset 1s ease-in-out";
-      progressCircle2.style.transition = "stroke-dashoffset 1s ease-in-out";
+        function easeOutCubic(t) {
+            return 1 - Math.pow(1 - t, 3);
+        }
+
+        // Demo functionality for testing without backend
+        // This part is useful for frontend development if your backend isn't ready.
+        // You might want to remove or comment it out when deploying with a live backend.
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            const originalImproveHandler = document.getElementById('improve-btn').onclick; // Store original if any
+            document.getElementById('improve-btn').addEventListener('click', async (e) => {
+                 // Check if the click is genuinely on the button and not a propagated event from a child
+                if (e.target.closest('.action-button').id === 'improve-btn' && !e.target.closest('.action-button').disabled ) {
+                    e.preventDefault(); // Prevent default only if it's the demo override
+
+                    // Check if this is the demo override path
+                    if (typeof originalImproveHandler === 'function' && e.isTrusted) {
+                        // If an original handler exists and it's a trusted event, maybe call it?
+                        // Or, ensure this demo code only runs if the '/improve' fetch would fail (e.g. no backend)
+                        // For simplicity, this demo override will take over on localhost.
+                    }
+                    
+                    const inputText = document.getElementById('input-text').value.trim();
+                    if (!inputText) {
+                        alert('Please enter some text to improve!');
+                        return;
+                    }
+
+                    const outputSection = document.getElementById('output-section');
+                    const improvedTextDiv = document.getElementById('improved-text');
+                    const improveBtn = document.getElementById('improve-btn');
+                    const loadingContainer = document.getElementById('loading-container');
+
+                    improveBtn.disabled = true;
+                    loadingContainer.style.display = 'flex';
+                    outputSection.classList.remove('show');
+
+                    await new Promise(resolve => setTimeout(resolve, 1500)); // Shorter delay for demo
+
+                    const demoImprovedText = `As an accomplished software developer with a robust 5-year background in full-stack development, I have consistently led cross-functional teams (8+ members) to successfully deliver over 15 high-impact projects, adhering to strict timelines. My proficiency in React, Node.js, and Python has been instrumental in achieving a 40% improvement in application performance. I excel in collaborating with stakeholders to architect and implement innovative solutions that significantly enhance user experience and drive substantial business growth.`;
+
+                    improvedTextDiv.textContent = demoImprovedText;
+                    
+                    const demoOldScore = Math.floor(Math.random() * 30) + 50; // Random old score 50-79
+                    const demoNewScore = Math.floor(Math.random() * 20) + 80; // Random new score 80-99
+                    updateScores(demoOldScore, demoNewScore);
+                    updateStats(demoOldScore, demoNewScore);
+                    
+                    const improvementBadge = document.getElementById('improvement-badge');
+                    const improvementText = document.getElementById('improvement-text');
+                    if (demoNewScore > demoOldScore) {
+                        improvementText.textContent = `Score improved by ${demoNewScore - demoOldScore} points!`;
+                        improvementBadge.style.display = 'inline-flex';
+                    } else {
+                        improvementBadge.style.display = 'none';
+                    }
+                    
+
+                    outputSection.classList.add('show');
+
+                    loadingContainer.style.display = 'none';
+                    improveBtn.disabled = false;
+                }
+            }, true); // Use capture phase for the demo override if necessary, or ensure proper event handling
+        }
     </script>
-  </body>
+</body>
 </html>
