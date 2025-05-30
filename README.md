@@ -80,5 +80,3 @@ The CV Text Improver is a web application designed to help users enhance their c
 5.  **Returning Results (`app.py`)**:
     * The Flask backend returns a JSON response containing the improved text, the original score, and the new score to the frontend.
 6.  **Displaying Results**: The JavaScript on the frontend updates the page to display the improved text and the scores.
-
-## Project Structure (Simplified)
